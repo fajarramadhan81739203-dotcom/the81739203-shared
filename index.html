@@ -153,7 +153,8 @@
 
         function initTheme() {
             const themeToggleBtn = document.getElementById('themeToggle');
-            const isDark = localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches);
+            // MODIFIKASI: Default ke dark mode jika belum ada di localStorage
+            const isDark = localStorage.getItem('theme') === 'dark' || !('theme' in localStorage);
             
             if (isDark) document.documentElement.classList.add('dark');
             updateThemeIcon(isDark);
@@ -305,10 +306,6 @@
                                 <h4 class="font-bold text-gray-900 dark:text-gray-100 truncate text-base ${isFull ? 'pr-8' : ''}" title="${escapeHtml(item.name)}">
                                     ${escapeHtml(item.name)}
                                </h4>
-                                <p class="text-xs text-gray-400 dark:text-gray-500 truncate mt-1 flex items-center gap-1" title="${escapeHtml(item.gmail)}@gmail.com">
-                                    <i data-lucide="mail" class="w-3 h-3 inline"></i>
-                                    <span>${escapeHtml(item.gmail)}@gmail.com</span>
-                                </p>
                             </div>
                         </div>
 
