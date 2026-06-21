@@ -246,7 +246,7 @@
         const name = document.getElementById("itemName").value.trim();
         const gmail = document.getElementById("itemGmail").value.trim();
         const link = document.getElementById("itemLink").value.trim();
-        const api_url = document.getElementById("itemApiUrl").value.trim(); // Ambil nilai API URL
+        const api_url = document.getElementById("itemApiUrl").value.trim();
         const is_full = document.getElementById("itemIsFull").checked;
 
         if (id === "") {
@@ -308,7 +308,7 @@
           .map((item) => {
             const isFull = item.is_full === true || item.is_full === "true";
             return `
-              <div class="bg-white dark:bg-drive-darkCard border ${isFull ? "border-red-200 dark:border-red-900/30 bg-red-50/10" : "border-gray-100 dark:border-gray-800/50"} rounded-2xl pl-5 pr-2 py-4 flex flex-col justify-center shadow-sm hover:shadow-md transition-all relative group">
+              <div class="bg-white dark:bg-drive-darkCard border ${isFull ? "border-red-200 dark:border-red-900/30 bg-red-50/10" : "border-gray-100 dark:border-gray-800/50"} rounded-2xl p-5 flex flex-col justify-center shadow-sm hover:shadow-md transition-all relative group">
                 
                 ${isFull ? `<div class="absolute top-0 right-0 bg-red-500 text-white text-[10px] font-bold px-2.5 py-1 rounded-tr-2xl rounded-bl-xl uppercase tracking-wider shadow-sm">Full</div>` : ""}
                 
@@ -321,9 +321,8 @@
                       <h4 class="font-bold text-gray-900 dark:text-gray-100 truncate text-base ${isFull ? "pr-8" : ""}" title="${escapeHtml(item.name)}">
                         ${escapeHtml(item.name)}
                       </h4>
-                      <p class="text-xs text-gray-400 dark:text-gray-500 truncate mt-1 flex items-center gap-1" title="${escapeHtml(item.gmail)}@gmail.com">
-                        <i data-lucide="mail" class="w-3 h-3 inline"></i>
-                        <span>${escapeHtml(item.gmail)}@gmail.com</span>
+                      <p class="text-xs text-gray-400 dark:text-gray-500 truncate mt-1" title="${escapeHtml(item.gmail)}@gmail.com">
+                        ${escapeHtml(item.gmail)}@gmail.com
                       </p>
                     </div>
                   </div>
@@ -344,8 +343,8 @@
                   </div>
                 </div>
 
-                <div class="mt-2 pr-3 pl-[3.25rem]">
-                  <div class="flex justify-between text-[10px] text-gray-500 dark:text-gray-400 mb-1">
+                <div class="mt-4 w-full">
+                  <div class="flex justify-between text-[10px] text-gray-500 dark:text-gray-400 mb-1.5">
                     <span id="text-used-${item.id}">Loading...</span>
                     <span id="text-percent-${item.id}">0%</span>
                   </div>
@@ -361,7 +360,6 @@
 
         lucide.createIcons();
 
-        // Panggil fetch kapasitas setelah elemen di-render
         filteredItems.forEach((item) => {
           if (item.api_url && item.api_url.trim() !== "") {
             checkCapacity(item.id, item.api_url);
@@ -391,7 +389,7 @@
         document.getElementById("itemForm").reset();
         document.getElementById("editIndex").value = "";
         document.getElementById("itemIsFull").checked = false;
-        document.getElementById("itemApiUrl").value = ""; // Reset API URL
+        document.getElementById("itemApiUrl").value = "";
 
         modal.classList.remove("hidden");
         setTimeout(() => {
@@ -411,7 +409,7 @@
         document.getElementById("itemName").value = item.name;
         document.getElementById("itemGmail").value = item.gmail;
         document.getElementById("itemLink").value = item.link;
-        document.getElementById("itemApiUrl").value = item.api_url || ""; // Isi input API URL jika ada
+        document.getElementById("itemApiUrl").value = item.api_url || "";
         document.getElementById("itemIsFull").checked = item.is_full === true || item.is_full === "true";
 
         modal.classList.remove("hidden");
@@ -442,7 +440,6 @@
         return text.toString().replace(/[&<>"']/g, (m) => map[m]);
       }
 
-      // FUNGSI BARU: Mengambil data persentase kapasitas storage dari Micro-GAS
       async function checkCapacity(id, apiUrl) {
         try {
           const response = await fetch(apiUrl);
@@ -458,7 +455,6 @@
               textPercent.innerText = `${data.percentage}%`;
               textUsed.innerText = `${data.used_gb} GB / ${data.total_gb} GB`;
 
-              // Beri peringatan merah jika sisa storage tinggal sedikit (misal > 90%)
               if (parseFloat(data.percentage) > 90) {
                 bar.classList.remove('bg-drive-blue');
                 bar.classList.add('bg-red-500');
